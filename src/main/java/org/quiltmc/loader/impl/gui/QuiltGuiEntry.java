@@ -175,7 +175,7 @@ public final class QuiltGuiEntry {
 		File jsonFile = File.createTempFile("quilt-loader-tree", ".json.gz");
 
 		try (OutputStream out = new GZIPOutputStream(new BufferedOutputStream(new FileOutputStream(jsonFile)))) {
-			try (JsonWriter writer = JsonWriter.create(new OutputStreamWriter(out, StandardCharsets.UTF_8))) {
+			try (JsonWriter writer = JsonWriter.json(new OutputStreamWriter(out, StandardCharsets.UTF_8))) {
 				writer.setIndent(" ");
 				tree.write(writer);
 				writer.flush();
@@ -215,7 +215,7 @@ public final class QuiltGuiEntry {
 			File from = new File(args[1]);
 
 			try (InputStream is = new GZIPInputStream(new BufferedInputStream(new FileInputStream(from)))) {
-				JsonReader reader = JsonReader.create(new InputStreamReader(is, StandardCharsets.UTF_8));
+				JsonReader reader = JsonReader.json(new InputStreamReader(is, StandardCharsets.UTF_8));
 				QuiltStatusTree tree = new QuiltStatusTree(reader);
 				System.out.println("Status:Opening");
 				openWindow(tree, true);
